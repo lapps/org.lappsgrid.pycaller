@@ -21,31 +21,29 @@ public class PyCaller {
     static final Logger logger = LoggerFactory.getLogger(PyCaller.class);
 
     static final String pythonBridger = "lapps_pickle_io.py";
+    static File pythonBridgerFile = null;
 
-    public static File preparePythonBridge() {
-        File file = new File(pythonBridger);
-        if(!file.exists()) {
-            try{
-                InputStream in = PyCaller.class.getResourceAsStream("/" + pythonBridger);
-                FileOutputStream out = new FileOutputStream(file, false);
-                try {
-                    int c;
-                    while ((c = in.read()) != -1) {
-                        out.write(c);
-                    }
-                } finally {
-                    if (in != null) {
-                        in.close();
-                    }
-                    if (out != null) {
-                        out.close();
-                    }
+    public static File preparePythonBridge() throws IOException {
+        if(pythonBridgerFile == null || !pythonBridgerFile.exists()) {
+            pythonBridgerFile = File.createTempFile("lapps_pickle_io", ".py");
+            InputStream in = PyCaller.class.getResourceAsStream("/" + pythonBridger);
+            FileOutputStream out = new FileOutputStream(pythonBridgerFile, false);
+            try {
+                int c;
+                while ((c = in.read()) != -1) {
+                    out.write(c);
                 }
-            }catch (IOException e) {
-                e.printStackTrace();
+            } finally {
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
             }
+            pythonBridgerFile.deleteOnExit();
         }
-        return file;
+        return pythonBridgerFile;
     }
 
     //
@@ -65,7 +63,13 @@ public class PyCaller {
             logger.error("Write pickle file failure ", e);
             throw new PyCallerException("Write Pickle File Failure.", e);
         }
-        File file = preparePythonBridge();
+        File file = null;
+        try {
+            file = preparePythonBridge();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new PyCallerException("Create file error : " + file, e);
+        }
         String jsonResult = call(file, pickleFile.toString());
         System.out.println("jsonResult="+jsonResult);
         Map map = json2map(jsonResult);
