@@ -52,8 +52,7 @@ public class PyCaller {
     //
     public static Object call(String pyPath, String method, Object ... params) throws PyCallerException {
         PickleBridge pb = new PickleBridge();
-        pb.put("params", params);
-        pb.put("method", method);
+        pb.put("params", new Object[]{method, params});
         pb.put("path", pyPath);
         logger.info("call(): pickle=" + pb);
         File pickleFile = null;
