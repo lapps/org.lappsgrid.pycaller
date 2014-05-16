@@ -58,6 +58,11 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.7</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.6.4</version>
+        </dependency>
         <!--Json Serialization-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

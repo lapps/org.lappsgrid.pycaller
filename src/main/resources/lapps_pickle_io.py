@@ -46,8 +46,10 @@ def runPythonFunc(pyFile, method, *args, **kwargs):
 def runPythonFuncWithPickle(infil):
     data = pickleLoad(infil)
     pyfil = data['path']
+    method = data['method']
     params =  data['params']
-    ret = runPythonFunc(pyfil, *params)
+    map =  data['map']
+    ret = runPythonFunc(pyfil, method, *params, **map)
     data['result'] = ret
     outfil = infil + '.out'
     pickleDump(data, outfil)

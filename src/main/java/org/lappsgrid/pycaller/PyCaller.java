@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import sun.misc.IOUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by shi on 5/15/14.
@@ -46,15 +43,21 @@ public class PyCaller {
         return pythonBridgerFile;
     }
 
+    public static Object call(File pyFile, String method, Object... params) throws PyCallerException{
+        return call(pyFile.getAbsolutePath(), method, params, new HashMap());
+    }
+
     //
     // running python file with string input
     // and string output
     //
-    public static Object call(String pyPath, String method, Object ... params) throws PyCallerException {
+    public static Object call(String pyPath, String method, Object [] params, Map paraMap) throws PyCallerException {
         PickleBridge pb = new PickleBridge();
-        pb.put("params", new Object[]{method, params});
+        pb.put("params", params);
+        pb.put("method", method);
+        pb.put("map", paraMap);
         pb.put("path", pyPath);
-        logger.info("call(): pickle=" + pb);
+        logger.info("call(): pickle=" + map2json(pb));
         File pickleFile = null;
         try {
             pickleFile = pb.toPickleFile(pb);
@@ -70,7 +73,7 @@ public class PyCaller {
             e.printStackTrace();
             throw new PyCallerException("Create file error : " + file, e);
         }
-        String jsonResult = call(file, pickleFile.toString());
+        String jsonResult = callIO(file, pickleFile.toString());
         logger.info("jsonResult="+jsonResult);
         Map map = json2map(jsonResult);
         File outputFile = new File((String)map.get("output"));
@@ -119,7 +122,7 @@ public class PyCaller {
     //
     // running python file with string input and string output
     //
-    private static String call(File pyFile, String ... params) throws PyCallerException{
+    private static String callIO(File pyFile, String ... params) throws PyCallerException{
         Map result = new LinkedHashMap();
         List<String> callAndArgs = new ArrayList<String>(params.length + 2);
         callAndArgs.add("python");
@@ -155,7 +158,7 @@ public class PyCaller {
             e.printStackTrace();
             throw new PyCallerException(e);
         }
-        logger.info("call(): result=" + result.toString());
+        logger.info("call(): result=" + map2json(result));
         return map2json(result);
     }
 
