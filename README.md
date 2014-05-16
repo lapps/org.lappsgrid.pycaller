@@ -9,7 +9,7 @@ Python Function Caller from Java
         <dependency>
             <groupId>org.lappsgrid</groupId>
             <artifactId>pycaller</artifactId>
-            <version>0.0.3</version>
+            <version>0.0.4</version>
         </dependency>
 ```
 
