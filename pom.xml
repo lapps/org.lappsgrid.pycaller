@@ -4,7 +4,7 @@
 
     <groupId>org.lappsgrid</groupId>
     <artifactId>pycaller</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
 
     <name>Python Java Caller.</name>
     <description />
@@ -19,7 +19,7 @@
         <url>https://github.com/chunqishi/org.lappsgrid.pycaller</url>
         <connection>scm:git:https://github.com/chunqishi/org.lappsgrid.pycaller.git</connection>
         <developerConnection>scm:git:https://github.com/chunqishi/org.lappsgrid.pycaller.git</developerConnection>
-        <tag>v0.1</tag>
+        <tag>v0.0.1</tag>
     </scm>
     <distributionManagement>
         <repository>
