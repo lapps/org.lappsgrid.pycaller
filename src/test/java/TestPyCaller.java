@@ -14,9 +14,9 @@ public class TestPyCaller {
     @Test
     public void testCall() throws URISyntaxException, PyCallerException {
         File pyFile = new File(this.getClass().getResource("/helloworld.py").toURI());
-        String ret = (String)PyCaller.call(pyFile.getAbsolutePath(), "hi", new String[]{"my", "friend", "!"});
+        String ret = (String)PyCaller.call(pyFile.getAbsolutePath(), "hi", new String[]{"all", "my", "friend", "!"});
         System.out.println(ret);
-        Assert.assertEquals("hello, my friend ! ",ret);
+        Assert.assertEquals("hello, all my friend ! ",ret);
     }
 
 }

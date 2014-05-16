@@ -50,11 +50,12 @@ public class PyCaller {
     // running python file with string input
     // and string output
     //
-    public static Object call(String pyPath, Object ... params) throws PyCallerException {
+    public static Object call(String pyPath, String method, Object ... params) throws PyCallerException {
         PickleBridge pb = new PickleBridge();
         pb.put("params", params);
+        pb.put("method", method);
         pb.put("path", pyPath);
-        logger.info("call(): result=" + pb);
+        logger.info("call(): pickle=" + pb);
         File pickleFile = null;
         try {
             pickleFile = pb.toPickleFile(pb);
@@ -71,7 +72,7 @@ public class PyCaller {
             throw new PyCallerException("Create file error : " + file, e);
         }
         String jsonResult = call(file, pickleFile.toString());
-        System.out.println("jsonResult="+jsonResult);
+        logger.info("jsonResult="+jsonResult);
         Map map = json2map(jsonResult);
         File outputFile = new File((String)map.get("output"));
         if (pickleFile.exists()) {
