@@ -6,7 +6,7 @@
 #                                                #
 
 
-import sys, os, imp
+import sys, os, imp, traceback
 import cPickle as pickle
 
 
@@ -34,23 +34,29 @@ def loadModule(pyFile):
         _mod = imp.load_source(_mod_name, pyFile)
         return _mod
 
-def runModuleFunc(module, method, *args, **kwargs):
-    _callable = getattr(module, method)
-    if callable(_callable):
-        return _callable(*args, **kwargs)
-
-def runPythonFunc(pyFile, method, *args, **kwargs):
-    _module = loadModule(pyFile)
-    return runModuleFunc(_module, method, *args, **kwargs)
-
 def runPythonFuncWithPickle(infil):
     data = pickleLoad(infil)
     pyfil = data['path']
     method = data['method']
     params =  data['params']
     map =  data['map']
-    ret = runPythonFunc(pyfil, method, *params, **map)
-    data['result'] = ret
+    try:
+        _module = loadModule(pyfil)
+        _callable = getattr(_module, method)
+        if callable(_callable):
+            data['result'] =  _callable(*params, **map)
+        else:
+            data['except'] = "Unknown method: " + method + "() in Python file " + pyfil
+    # https://docs.python.org/2/library/exceptions.html#exceptions.SyntaxError
+    # https://docs.python.org/2/library/traceback.html
+    except SyntaxError:
+        data['except'] = "Fail to compile Python file '" + pyfil + "'"
+    except AttributeError:
+        data['except'] = "Unknown method: '" + method + "()' in Python file '" + pyfil + "'"
+    except:
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        data['except'] = repr(traceback.extract_tb(exc_traceback)[1:]).encode('unicode-escape').decode().replace("\\\\", "\\").replace("\\\\", "\\")
+        data['except'] = traceback.extract_tb(exc_traceback)[1:]
     outfil = infil + '.out'
     pickleDump(data, outfil)
     return outfil

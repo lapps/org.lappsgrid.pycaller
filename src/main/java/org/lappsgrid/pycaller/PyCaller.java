@@ -55,6 +55,9 @@ public class PyCaller {
     }
 
     public static Object call(File pyFile, String method, Object... params) throws PyCallerException{
+        if(!pyFile.exists()) {
+            throw new PyCallerException("Python file does NOT exist: " + pyFile);
+        }
         return call(pyFile.getAbsolutePath(), method, params, new HashMap());
     }
 
@@ -87,11 +90,15 @@ public class PyCaller {
 //        String jsonResult = callIO(file, pickleFile.toString());
 //        logger.info("jsonResult="+jsonResult);
 //        Map map = json2map(jsonResult);
-        Map map = callIO(file, pickleFile.toString());
-        File outputFile = new File((String)map.get("output"));
-        if (pickleFile.exists()) {
-            pickleFile.delete();
+        Map map = null;
+        try {
+            map = callIO(file, pickleFile.toString());
+        }finally {
+            if (pickleFile.exists()) {
+                pickleFile.delete();
+            }
         }
+        File outputFile = new File((String)map.get("output"));
         Map res = null;
         try {
             res = (Map)pb.fromPickleFile(outputFile);
@@ -105,6 +112,19 @@ public class PyCaller {
             }
         }
         Object results = res.get("result");
+        Object excepts = res.get("except");
+        if(excepts != null) {
+            StringBuilder sb = new StringBuilder("");
+            if(excepts instanceof List) {
+                sb.append(" [ <file>, <line>, <method>, <code> ]\n");
+                for (Object[] arr : (List<Object[]>) excepts) {
+                    sb.append(Arrays.toString(arr)).append("\n");
+                }
+            } else if(excepts instanceof String) {
+                sb.append(excepts);
+            }
+            throw new PyCallerException(sb.toString());
+        }
         logger.info("call(): result=" + res);
         return results;
     }
