@@ -46,7 +46,7 @@ def runPythonFuncWithPickle(infil):
         if callable(_callable):
             data['result'] =  _callable(*params, **map)
         else:
-            data['except'] = "Unknown method: " + method + "() in Python file " + pyfil
+            data['except'] = "Unknown method: " + method + "() in Python file '" + pyfil + "'"
     # https://docs.python.org/2/library/exceptions.html#exceptions.SyntaxError
     # https://docs.python.org/2/library/traceback.html
     except SyntaxError:
