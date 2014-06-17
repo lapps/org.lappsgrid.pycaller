@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Org.lappsgrid.pycaller by lapps</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Org.lappsgrid.pycaller</h1>
+        <p>Python Function Caller from Java</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/lapps/org.lappsgrid.pycaller" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/lapps/org.lappsgrid.pycaller/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/lapps/org.lappsgrid.pycaller/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>
+<a name="orglappsgridpycaller" class="anchor" href="#orglappsgridpycaller"><span class="octicon octicon-link"></span></a>org.lappsgrid.pycaller</h1>
+
+<p>Python Function Caller from Java</p>
+
+<h3>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h3>
+
+<div class="highlight highlight-xml"><pre>        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.lappsgrid<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>pycaller<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>0.1.0<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+<h3>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h3>
+
+<div class="highlight highlight-java"><pre>    <span class="n">PyCaller</span><span class="o">.</span><span class="na">call</span><span class="o">(</span><span class="n">pythonPath</span><span class="o">,</span> <span class="n">methodName</span><span class="o">,</span> <span class="n">param1</span><span class="o">,</span> <span class="n">param2</span><span class="o">,</span> <span class="o">...);</span>
+</pre></div>
+
+<h3>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h3>
+
+<h4>
+<a name="python-file-helloworldpy" class="anchor" href="#python-file-helloworldpy"><span class="octicon octicon-link"></span></a>Python File (helloworld.py)</h4>
+
+<div class="highlight highlight-python"><pre><span class="s">" "</span> <span class="s">" helloworld.py "</span> <span class="s">" "</span>
+<span class="k">def</span> <span class="nf">hi</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s">"hello, "</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">item</span> <span class="o">+</span> <span class="s">" "</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+
+<h4>
+<a name="java-file-helloworldjava" class="anchor" href="#java-file-helloworldjava"><span class="octicon octicon-link"></span></a>Java File HelloWorld.java</h4>
+
+<div class="highlight highlight-java"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">ret</span> <span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span><span class="n">PyCaller</span><span class="o">.</span><span class="na">call</span><span class="o">(</span><span class="n">pyFile</span><span class="o">,</span> <span class="s">"hi"</span><span class="o">,</span> <span class="o">(</span><span class="n">Object</span><span class="o">)</span><span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">"all"</span><span class="o">,</span> <span class="s">"my"</span><span class="o">,</span> <span class="s">"friend"</span><span class="o">,</span> <span class="s">"!"</span><span class="o">})</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p>The result will be <code>"hello, all my friend ! "</code>;</p>
+
+<h3>
+<a name="python-to-java-mapping" class="anchor" href="#python-to-java-mapping"><span class="octicon octicon-link"></span></a>Python to Java Mapping</h3>
+
+<pre><code>*&lt;p&gt;
+     *&lt;p&gt;   PYTHON    ----&gt;     JAVA        [[[[ RETURN VALUES ]]]
+     *&lt;p&gt;   ------              ----
+     *&lt;p&gt;   None                null
+     *&lt;p&gt;   bool                boolean
+     *&lt;p&gt;   int                 int
+     *&lt;p&gt;   long                long or BigInteger  (depending on size)
+     *&lt;p&gt;   string              String
+     *&lt;p&gt;   unicode             String
+     *&lt;p&gt;   complex             net.razorvine.pickle.objects.ComplexNumber
+     *&lt;p&gt;   datetime.date       java.util.Calendar
+     *&lt;p&gt;   datetime.datetime   java.util.Calendar
+     *&lt;p&gt;   datetime.time       java.util.Calendar
+     *&lt;p&gt;   datetime.timedelta  net.razorvine.pickle.objects.TimeDelta
+     *&lt;p&gt;   float               double   (float isn't used)
+     *&lt;p&gt;   array.array         array of appropriate primitive type (char, int, short, long, float, double)
+     *&lt;p&gt;   list                java.util.List&lt;Object&gt;
+     *&lt;p&gt;   tuple               Object[]
+     *&lt;p&gt;   set                 java.util.Set
+     *&lt;p&gt;   dict                java.util.Map
+     *&lt;p&gt;   bytes               byte[]
+     *&lt;p&gt;   bytearray           byte[]
+     *&lt;p&gt;   decimal             BigDecimal
+     *&lt;p&gt;   custom class        Map&lt;String, Object&gt;  (dict with class attributes including its name in "__class__")
+     *&lt;p&gt;   Pyro4.core.URI      net.razorvine.pyro.PyroURI
+     *&lt;p&gt;   Pyro4.core.Proxy    net.razorvine.pyro.PyroProxy
+     *&lt;p&gt;   Pyro4.errors.*      net.razorvine.pyro.PyroException
+     *&lt;p&gt;   Pyro4.utils.flame.FlameBuiltin     net.razorvine.pyro.FlameBuiltin
+     *&lt;p&gt;   Pyro4.utils.flame.FlameModule      net.razorvine.pyro.FlameModule
+     *&lt;p&gt;   Pyro4.utils.flame.RemoteInteractiveConsole    net.razorvine.pyro.FlameRemoteConsole
+     *&lt;p&gt;
+     *&lt;p&gt;   The unpickler simply returns an Object. Because Java is a statically typed
+     *&lt;p&gt;   language you will have to cast that to the appropriate type. Refer to this
+     *&lt;p&gt;   table to see what you can expect to receive.
+     *&lt;p&gt;
+     *&lt;p&gt;
+     *&lt;p&gt;   JAVA     ----&gt;      PYTHON          [[[[ PARAMETERS ]]]
+     *&lt;p&gt;   -----               ------
+     *&lt;p&gt;   null                None
+     *&lt;p&gt;   boolean             bool
+     *&lt;p&gt;   byte                int
+     *&lt;p&gt;   char                str/unicode (length 1)
+     *&lt;p&gt;   String              str/unicode
+     *&lt;p&gt;   double              float
+     *&lt;p&gt;   float               float
+     *&lt;p&gt;   int                 int
+     *&lt;p&gt;   short               int
+     *&lt;p&gt;   BigDecimal          decimal
+     *&lt;p&gt;   BigInteger          long
+     *&lt;p&gt;   any array           array if elements are primitive type (else tuple)
+     *&lt;p&gt;   Object[]            tuple (cannot contain self-references)
+     *&lt;p&gt;   byte[]              bytearray
+     *&lt;p&gt;   java.util.Date      datetime.datetime
+     *&lt;p&gt;   java.util.Calendar  datetime.datetime
+     *&lt;p&gt;   Enum                the enum value as string
+     *&lt;p&gt;   java.util.Set       set
+     *&lt;p&gt;   Map, Hashtable      dict
+     *&lt;p&gt;   Vector, Collection  list
+     *&lt;p&gt;   Serializable        treated as a JavaBean, see below.
+     *&lt;p&gt;   JavaBean            dict of the bean's public properties + __class__ for the bean's type.
+     *&lt;p&gt;   net.razorvine.pyro.PyroURI      Pyro4.core.URI
+     *&lt;p&gt;   net.razorvine.pyro.PyroProxy    cannot be pickled.
+</code></pre>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/lapps">lapps</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
