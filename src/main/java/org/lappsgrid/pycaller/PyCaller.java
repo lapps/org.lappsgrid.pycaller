@@ -15,7 +15,7 @@
  **********************************************************************************************************************/
 package org.lappsgrid.pycaller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +68,7 @@ public class PyCaller {
         pb.put("method", method);
         pb.put("map", paraMap);
         pb.put("path", pyPath);
-        logger.info("call(): pickle=" + map2json(pb));
+//        logger.info("call(): pickle=" + map2json(pb));
         File pickleFile = null;
         try {
             pickleFile = pb.toPickleFile(pb);
@@ -84,9 +84,10 @@ public class PyCaller {
             e.printStackTrace();
             throw new PyCallerException("Create file error : " + file, e);
         }
-        String jsonResult = callIO(file, pickleFile.toString());
-        logger.info("jsonResult="+jsonResult);
-        Map map = json2map(jsonResult);
+//        String jsonResult = callIO(file, pickleFile.toString());
+//        logger.info("jsonResult="+jsonResult);
+//        Map map = json2map(jsonResult);
+        Map map = callIO(file, pickleFile.toString());
         File outputFile = new File((String)map.get("output"));
         if (pickleFile.exists()) {
             pickleFile.delete();
@@ -108,32 +109,32 @@ public class PyCaller {
         return results;
     }
 
-    static Map json2map(String json){
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return (Map)mapper.readValue(json, Map.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            logger.error("Json serialization error. ", e);
-        }
-        return null;
-    }
+//    static Map json2map(String json){
+//        ObjectMapper mapper = new ObjectMapper();
+//        try {
+//            return (Map)mapper.readValue(json, Map.class);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            logger.error("Json serialization error. ", e);
+//        }
+//        return null;
+//    }
 
-    static String map2json(Map map) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.writeValueAsString(map);
-        }catch (IOException e) {
-            e.printStackTrace();
-            logger.error("Json de-serialization error. ", e);
-        }
-        return null;
-    }
+//    static String map2json(Map map) {
+//        ObjectMapper mapper = new ObjectMapper();
+//        try {
+//            return mapper.writeValueAsString(map);
+//        }catch (IOException e) {
+//            e.printStackTrace();
+//            logger.error("Json de-serialization error. ", e);
+//        }
+//        return null;
+//    }
 
     //
     // running python file with string input and string output
     //
-    private static String callIO(File pyFile, String ... params) throws PyCallerException{
+    private static Map callIO(File pyFile, String ... params) throws PyCallerException{
         Map result = new LinkedHashMap();
         List<String> callAndArgs = new ArrayList<String>(params.length + 2);
         callAndArgs.add("python");
@@ -169,8 +170,9 @@ public class PyCaller {
             e.printStackTrace();
             throw new PyCallerException(e);
         }
-        logger.info("call(): result=" + map2json(result));
-        return map2json(result);
+//        logger.info("call(): result=" + map2json(result));
+//        return map2json(result);
+        return result;
     }
 
 
