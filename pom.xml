@@ -4,37 +4,56 @@
 
     <groupId>org.lappsgrid</groupId>
     <artifactId>pycaller</artifactId>
-    <version>0.0.6-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <name>Python Java Caller.</name>
-    <description />
+    <description>
+        Java caller of Python functions.
+    </description>
     <packaging>jar</packaging>
 
-
+    <url>https://github.com/chunqishi/org.lappsgrid.pycaller</url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
     <issueManagement>
         <url>https://github.com/chunqishi/org.lappsgrid.pycaller/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
+
     <scm>
         <url>https://github.com/chunqishi/org.lappsgrid.pycaller</url>
         <connection>scm:git:https://github.com/chunqishi/org.lappsgrid.pycaller.git</connection>
         <developerConnection>scm:git:https://github.com/chunqishi/org.lappsgrid.pycaller.git</developerConnection>
         <tag>v0.1</tag>
     </scm>
+
     <distributionManagement>
+        <!--<repository>-->
+            <!--<id>anc-releases</id>-->
+            <!--<url>http://www.anc.org:8080/nexus/content/repositories/releases/</url>-->
+        <!--</repository>-->
+        <!--<snapshotRepository>-->
+            <!--<id>anc-snapshots</id>-->
+            <!--<url>http://www.anc.org:8080/nexus/content/repositories/snapshots/</url>-->
+        <!--</snapshotRepository>-->
         <repository>
-            <id>anc-releases</id>
-            <url>http://www.anc.org:8080/nexus/content/repositories/releases/</url>
+            <id>sonatype-nexus-staging</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
         <snapshotRepository>
-            <id>anc-snapshots</id>
-            <url>http://www.anc.org:8080/nexus/content/repositories/snapshots/</url>
+            <id>sonatype-nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
     <developers>
         <developer>
-            <email>shicq@cs.brandeis.edu</email>
+            <email>chunqi.shi@hotmail.com</email>
             <name>Chunqi SHI</name>
             <url>https://github.com/chunqishi/</url>
             <id>chunqishi</id>
@@ -42,20 +61,15 @@
     </developers>
 
     <properties>
-        <vocabulary.version>0.9.4</vocabulary.version>
+        <pyrolite.version>2.0.1</pyrolite.version>
     </properties>
 
     <dependencies>
         <!--Pickle Serialization-->
-        <!--<dependency>-->
-            <!--<groupId>pyrolite</groupId>-->
-            <!--<artifactId>pyrolite</artifactId>-->
-            <!--<version>2013-09-08</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.spark-project</groupId>
             <artifactId>pyrolite</artifactId>
-            <version>2.0.1</version>
+            <version>${pyrolite.version}</version>
         </dependency>
         <!--Logging-->
         <dependency>
@@ -67,12 +81,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.6.4</version>
-        </dependency>
-        <!--Json Serialization-->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.3.3</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

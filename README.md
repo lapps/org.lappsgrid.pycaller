@@ -13,11 +13,35 @@ Python Function Caller from Java
         </dependency>
 ```
 
-### Example
+### API
 
 ```java
     PyCaller.call(pythonPath, methodName, param1, param2, ...);
 ```
+
+
+### Example
+
+#### Python File (helloworld.py)
+```python
+" " " helloworld.py " " "
+def hi(arr):
+    res = "hello, "
+    for item in arr:
+        res += item + " "
+    return res
+```
+#### Java File HelloWorld.java
+```java
+public class HelloWorld {
+	public static void main(String [] args) {
+		String ret = (String)PyCaller.call(pyFile, "hi", (Object)new String[]{"all", "my", "friend", "!"})
+	}
+}
+```
+
+The result will be `"hello, all my friend ! "`;
+
 ### Python to Java Mapping
 
 ```
