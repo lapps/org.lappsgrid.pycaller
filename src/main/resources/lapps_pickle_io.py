@@ -1,9 +1,7 @@
-#                                                #
-# @file:    lapps_pickle_io.py
-# @author:    shicq@cs.brandeis.edu
-# @brief:   base io functions
-# @date:    Apr. 15, 2014
-#                                                #
+__file__=       'lapps_pickle_io.py'
+__author__=     'shicq@cs.brandeis.edu'
+__brief__=      'base io functions'
+__date__=       'Apr. 15, 2014'
 
 
 import sys, os, imp, traceback
